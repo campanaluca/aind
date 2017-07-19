@@ -92,11 +92,11 @@ def display(values):
 
 
 def eliminate(values):
-    for k, v in values.items():
-        if len(v) == 1:
-            continue
-        a = {values[x] for x in peers[k] if len(values[x]) == 1}
-        assign_value(values, k, "".join(set(v) - a))
+    solved_values = [box for box in values.keys() if len(values[box]) == 1]
+    for box in solved_values:
+        digit = values[box]
+        for peer in peers[box]:
+            assign_value(values, peer, values[peer].replace(digit, ''))
     return values
 
 
